@@ -364,3 +364,5 @@ FodyWeavers.xsd
 
 # Cleanup the GitHub Copilot outputs
 .copilot/
+
+.vscode/

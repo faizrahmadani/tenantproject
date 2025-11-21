@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Text.RegularExpressions;
 using TenantProject.Data.Configurations;
 using TenantProject.Model.Entity;
 
@@ -32,5 +31,26 @@ public class MainDatabaseContext: IdentityDbContext
                 property.SetColumnName(property.GetColumnName().ToLower());
             }
         }
+
+        var tenantTypes = new List<TenantType>()
+        {
+            new TenantType()
+            {
+                Id = Guid.Parse("3b0b302a-72e9-4eae-856f-a6737756cb5b"),
+                Name = "Food Truck",
+            },
+            new TenantType()
+            {
+                Id = Guid.Parse("8c815abe-4b51-4f86-80de-bff5cb6d5baa"),
+                Name = "Booth",
+            },
+            new TenantType()
+            {
+                Id = Guid.Parse("cd285a19-b09d-4900-8ac8-154a95e9f69f"),
+                Name = "Space Only",
+            }
+        };
+
+        builder.Entity<TenantType>().HasData(tenantTypes);
     }
 }

@@ -10,6 +10,8 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
     {
         builder.ToTable("tenant");
         builder.HasKey(t => t.Id);
+        builder.Property(t => t.Id)
+            .HasColumnName("id");
         builder.Property(t => t.TenantName)
             .HasColumnName("tenant_name");
         builder.Property(t => t.TenantTypeId)
@@ -20,7 +22,15 @@ public class TenantConfiguration : IEntityTypeConfiguration<Tenant>
             .HasColumnName("tenant_phone");
 
         builder.HasOne(t => t.TenantType)
-            .WithOne(t => t.Tenant)
-            .HasForeignKey<Tenant>(q => q.TenantTypeId);
+            .WithMany(t => t.Tenants)
+            .HasForeignKey(q => q.TenantTypeId);
+
+        builder.HasOne(t => t.TenantBoothDetail)
+            .WithOne(b => b.Tenant)
+            .HasForeignKey<TenantBoothDetail>(b => b.TenantId);
+
+        builder.HasOne(t => t.TenantSpaceDetail)
+            .WithOne(s => s.Tenant)
+            .HasForeignKey<TenantSpaceDetail>(s => s.TenantId);
     }
 }

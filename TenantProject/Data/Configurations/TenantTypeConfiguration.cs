@@ -10,6 +10,7 @@ public class TenantTypeConfiguration : IEntityTypeConfiguration<TenantType>
     {
         builder.ToTable("tenant_type");
         builder.HasKey(t => t.Id);
+        builder.Property(t => t.Id).HasColumnName("id");
         builder.Property(t => t.Name).HasColumnName("name");
     }
 }
