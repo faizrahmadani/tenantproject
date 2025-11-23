@@ -32,11 +32,11 @@ public class TenantController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTenants()
+    public async Task<IActionResult> GetTenants([FromQuery] string? search)
     {
         try
         {
-            var result = await _tenantService.GetTenants();
+            var result = await _tenantService.GetTenants(search);
             return Ok(result);
         }
         catch (Exception ex)

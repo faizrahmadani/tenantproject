@@ -60,14 +60,21 @@ public class TenantService
         return requestDto;
     }
 
-    public async Task<List<TenantResponseDto>> GetTenants()
+    public async Task<List<TenantResponseDto>> GetTenants(string search)
     {
         var listOfTenantResponseDto = new List<TenantResponseDto>();
-        var currentListOfTenants = await _context.Tenants
+        var query = _context.Tenants
             .Include(e => e.TenantType)
             .Include(e => e.TenantBoothDetail)
             .Include(e => e.TenantSpaceDetail)
-            .ToListAsync();
+            .AsQueryable();
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(e => e.TenantName.ToLower().Contains(search.ToLower()));
+        }
+
+        var currentListOfTenants = await query.ToListAsync();
 
         foreach (var tenant in currentListOfTenants)
         {
