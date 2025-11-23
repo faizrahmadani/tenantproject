@@ -8,11 +8,11 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy only csproj first (biar restore lebih cepat)
+# Copy only csproj first
 COPY TenantProject/*.csproj TenantProject/
 RUN dotnet restore "TenantProject/TenantProject.csproj"
 
-# Copy seluruh source code
+# Copy all source code
 COPY . .
 
 # Build
@@ -27,7 +27,7 @@ RUN dotnet publish "TenantProject.csproj" -c Release -o /app/publish /p:UseAppHo
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
-# Copy hasil publish
+# Copy publish result
 COPY --from=publish /app/publish .
 
 # Run the app
