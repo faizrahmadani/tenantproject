@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>b79d60c1-d576-402e-aab4-e178dda695fd</UserSecretsId>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<ContainerRepository>faizrahmadani/tenantproject</ContainerRepository>
 	</PropertyGroup>
 
 	<ItemGroup>

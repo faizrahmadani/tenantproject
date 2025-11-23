@@ -4,7 +4,6 @@ using TenantProject.Model.DTO;
 using TenantProject.Services;
 
 namespace TenantProject.Controllers;
-
 [Route("api")]
 [ApiController]
 public class LoginController: ControllerBase
@@ -17,22 +16,22 @@ public class LoginController: ControllerBase
         _tokenService = tokenService;
     }
 
-    [HttpPost]
-    [Route("Register")]
-    public async Task<IActionResult> Register([FromBody] RegisterRequestDto dto)
-    {
-        var user = new IdentityUser
-        {
-            UserName = dto.Username,
-            Email = dto.Email,
-        };
-        var identityResult = await _userManager.CreateAsync(user, dto.Password);
-        if (identityResult.Succeeded)
-        {
-            return Ok(new { message = "User was registered! Now Login!" });
-        }
-        return BadRequest("Something went wrong!");
-    }
+    //[HttpPost]
+    //[Route("Register")]
+    //public async Task<IActionResult> Register([FromBody] RegisterRequestDto dto)
+    //{
+    //    var user = new IdentityUser
+    //    {
+    //        UserName = dto.Username,
+    //        Email = dto.Email,
+    //    };
+    //    var identityResult = await _userManager.CreateAsync(user, dto.Password);
+    //    if (identityResult.Succeeded)
+    //    {
+    //        return Ok(new { message = "User was registered! Now Login!" });
+    //    }
+    //    return BadRequest("Something went wrong!");
+    //}
 
     [HttpPost]
     [Route("Login")]
