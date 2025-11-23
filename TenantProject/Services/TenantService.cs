@@ -26,7 +26,7 @@ public class TenantService
         {
             Id = tenantId,
             TenantName = requestDto.TenantName,
-            TenantTypeId = requestDto.TenantTypeId,
+            TenantTypeId = Guid.Parse(requestDto.TenantTypeId),
             TenantAddress = requestDto.TenantAddress,
             TenantPhone = requestDto.TenantPhone,
         };
@@ -35,6 +35,9 @@ public class TenantService
 
         if (currentTenantType.Name == TenantTypeEnum.Booth)
         {
+            if (requestDto.BoothNum == null)
+                throw new Exception(ErrorMessageHelper.BoothNumNull);
+
             var newTenantBooth = new TenantBoothDetail()
             {
                 Id = Guid.NewGuid(),
@@ -46,6 +49,9 @@ public class TenantService
         }
         if (currentTenantType.Name == TenantTypeEnum.SpaceOnly)
         {
+            if (requestDto.AreaSm == null)
+                throw new Exception(ErrorMessageHelper.AreaSmNull);
+
             var newTenantBooth = new TenantSpaceDetail()
             {
                 Id = Guid.NewGuid(),
@@ -106,12 +112,12 @@ public class TenantService
             .ToListAsync();
     }
 
-    private async Task<TenantType?> CheckTenantTypeExist(Guid requestedTenantId)
+    private async Task<TenantType?> CheckTenantTypeExist(string requestedTenantId)
     {
         var listOfTenantTypeId = await _context.TenantTypes.ToListAsync();
-        if (listOfTenantTypeId.Select(e => e.Id).Contains(requestedTenantId))
+        if (listOfTenantTypeId.Select(e => e.Id).Contains(Guid.Parse(requestedTenantId)))
         {
-            var requestedTenant = listOfTenantTypeId.FirstOrDefault(e => e.Id == requestedTenantId);
+            var requestedTenant = listOfTenantTypeId.FirstOrDefault(e => e.Id == Guid.Parse(requestedTenantId));
             return requestedTenant;
         }
         return null;
