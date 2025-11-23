@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import SidebarMenu from '../../../components/SidebarMenu.vue'
-import { useCreateTenant } from '../../../composables/tenants/useCreateTenant'
-import { useGetTenantTypes } from '../../../composables/tenants/useGetTenantTypes'
-import { TenantType } from '../../../enum/Tenant'
+import { useGetTenantTypes } from '../../composables/tenants/useGetTenantTypes'
+import { useCreateTenant } from '../../composables/tenants/useCreateTenant'
+import { TenantType } from '../../enum/Tenant'
 
 const router = useRouter()
 
@@ -15,7 +14,7 @@ const tenantAddress = ref<string>('')
 const boothNum = ref<string | null>(null)
 const areaSm = ref<number | null>(null)
 
-const errors = reactive<Record<string, string>>({})	
+const errors = reactive<Record<string, string>>({})
 
 const { data: tenantTypes } = useGetTenantTypes();
 const { mutate, isPending } = useCreateTenant()
@@ -33,7 +32,7 @@ const addTenant = (e: Event) => {
 		},
 		{
 			onSuccess: () => {
-				router.push('/admin/tenants')
+				router.push('/')
 			},
 			onError: (error: any) => {
 				Object.assign(errors, error.response.data.errors)
@@ -45,10 +44,7 @@ const addTenant = (e: Event) => {
 
 <template>
 	<div class="container mt-5 mb-5">
-		<div class="row">
-			<div class="col-md-3">
-				<SidebarMenu />
-			</div>
+		<div class="row justify-content-center">
 			<div class="col-md-9">
 				<div class="card border-0 rounded-2 shadow-sm">
 					<div class="card-header">
@@ -119,8 +115,7 @@ const addTenant = (e: Event) => {
 								{{ isPending ? 'Saving...' : 'Save' }}
 							</button>
 
-							<router-link to="/admin/tenants"
-								class="btn btn-md btn-secondary rounded-2 shadow-sm border-0 ms-2">
+							<router-link to="/" class="btn btn-md btn-secondary rounded-2 shadow-sm border-0 ms-2">
 								Cancel
 							</router-link>
 						</form>

@@ -3,7 +3,6 @@ import { useRouter } from 'vue-router';
 
 export const useLogout = (): (() => void) => {
 
-	// initialize router
 	const router = useRouter();
 
 	const logout = (): void => {

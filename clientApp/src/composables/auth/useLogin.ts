@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/vue-query';
 import Api from '../../services/api';
 
-//interface LoginRequest
 interface LoginRequest {
 	email: string;
 	password: string;

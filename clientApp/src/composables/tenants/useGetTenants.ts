@@ -1,19 +1,13 @@
 import { useQuery } from '@tanstack/vue-query';
 import Api from '../../services/api';
-import Cookies from 'js-cookie';
+import type { Ref } from 'vue';
 
-export const useGetTenants = () => {
+export const useGetTenants = (search: Ref<string>) => {
 	return useQuery<Tenant[], Error>({
-		queryKey: ['tenants'],
+		queryKey: ['tenants', search],
 
 		queryFn: async () => {
-			const token = Cookies.get('token');
-
-			const response = await Api.get('/api/Tenant', {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
+			const response = await Api.get(`/api/Tenant?search=${search.value || ''}`);
 			return response.data as Tenant[];
 		},
 	});
